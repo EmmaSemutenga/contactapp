@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'drf_yasg',
     'authentication.apps.AuthenticationConfig',
     'contacts.apps.ContactsConfig',
+    'corsheaders',
 ]
 
 SWAGGER_SETTINGS = {
@@ -71,6 +72,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+     'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.common.CommonMiddleware',
 ]
 
 ROOT_URLCONF = 'mywebsite.urls'
@@ -147,3 +150,8 @@ JWT_SECRET_KEY = os.environ.get('JWT_SECRET_KEY')
 STATIC_URL = '/static/'
 
 django_heroku.settings(locals())
+
+# CORS
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:8080",
+]
