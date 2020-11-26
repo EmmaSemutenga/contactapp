@@ -2,23 +2,29 @@ from django.shortcuts import render
 from rest_framework.generics import GenericAPIView
 from .serializers import UserSerializer, LoginSerializer
 from rest_framework.response import Response
-from rest_framework import status
+from rest_framework import status, generics
 from django.conf import settings
 from django.contrib import auth
 import jwt
+from django.contrib.auth.models import User
 
 # Create your views here.
-class RegisterView(GenericAPIView):
+# class RegisterView(GenericAPIView):
+#     serializer_class = UserSerializer
+
+#     def post(self, request):
+#         serializer = UserSerializer(data=request.data)
+
+#         if serializer.is_valid():
+#             serializer.save()
+#             return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+#         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class RegisterView(generics.ListCreateAPIView):
+    queryset = User.objects.all()
     serializer_class = UserSerializer
 
-    def post(self, request):
-        serializer = UserSerializer(data=request.data)
-
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class LoginView(GenericAPIView):
     serializer_class = LoginSerializer
